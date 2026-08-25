@@ -1,0 +1,6 @@
+{
+  "name": "Tomisin in Hogwarts",
+  "description": "Multiplayer TTRPG celebrating Tomisin's 27th birthday set in a magical pink & gold Hogwarts. Features avatar creation, House sorting ceremony, spell store, dynamic inventory, and turn-based combat in the Evil Forest against the Evil Babalawo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
