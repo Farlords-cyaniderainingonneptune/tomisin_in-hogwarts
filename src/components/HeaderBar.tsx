@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Copy, Check, Users, Shield, Crown, Database } from 'lucide-react';
+import { Sparkles, Copy, Check, Users, Shield, Crown } from 'lucide-react';
 import { GameRoom, Player } from '../types/game';
 import { HOUSES } from '../data/gameData';
 import { playButtonClick } from '../utils/audio';
@@ -8,13 +8,11 @@ interface HeaderBarProps {
   room: GameRoom | null;
   currentPlayer: Player | null;
   onLeaveRoom?: () => void;
-  onOpenDatabase?: () => void;
 }
 
 export const HeaderBar: React.FC<HeaderBarProps> = ({
   room,
   currentPlayer,
-  onOpenDatabase,
 }) => {
   const [copied, setCopied] = useState(false);
 
@@ -117,40 +115,7 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
                 </div>
               </div>
             )}
-            {/* Database Inspector Button */}
-            {onOpenDatabase && (
-              <button
-                type="button"
-                id="btn-open-database-inspector"
-                onClick={() => {
-                  playButtonClick();
-                  onOpenDatabase();
-                }}
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-semibold transition cursor-pointer"
-                title="Inspect Database Tables"
-              >
-                <Database className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">DB Tables</span>
-              </button>
-            )}
           </div>
-        )}
-
-        {/* Database button when not in room */}
-        {!room && onOpenDatabase && (
-          <button
-            type="button"
-            id="btn-open-database-inspector-lobby"
-            onClick={() => {
-              playButtonClick();
-              onOpenDatabase();
-            }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-semibold transition cursor-pointer"
-            title="Inspect Hogwarts Tables"
-          >
-            <Database className="w-3.5 h-3.5" />
-            <span>Database Tables</span>
-          </button>
         )}
       </div>
     </header>

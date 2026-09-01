@@ -309,7 +309,7 @@ export const SortingHatView: React.FC<SortingHatViewProps> = ({
             }`}
           >
             <span>
-              {currentQuestionIndex < SORTING_HAT_QUESTIONS.length - 1
+              {currentQuestionIndex < questions.length - 1
                 ? 'Next Dilemma'
                 : 'Proclaim My House'}
             </span>

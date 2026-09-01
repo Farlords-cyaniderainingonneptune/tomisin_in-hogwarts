@@ -7,7 +7,6 @@ import { SortingHatView } from './components/SortingHatView';
 import { CommonRoomView } from './components/CommonRoomView';
 import { CombatArenaView } from './components/CombatArenaView';
 import { VictoryView } from './components/VictoryView';
-import { DatabaseModal } from './components/DatabaseModal';
 import { Sparkles, AlertCircle } from 'lucide-react';
 
 export default function App() {
@@ -15,7 +14,6 @@ export default function App() {
   const [room, setRoom] = useState<GameRoom | null>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isDatabaseModalOpen, setIsDatabaseModalOpen] = useState(false);
 
   useEffect(() => {
     // Initialize Socket connection to server
@@ -111,7 +109,6 @@ export default function App() {
       <HeaderBar
         room={room}
         currentPlayer={currentPlayer}
-        onOpenDatabase={() => setIsDatabaseModalOpen(true)}
       />
 
       {/* Floating Error Toast */}
@@ -172,12 +169,6 @@ export default function App() {
           </div>
         )}
       </main>
-
-      {/* Database Inspector Modal */}
-      <DatabaseModal
-        isOpen={isDatabaseModalOpen}
-        onClose={() => setIsDatabaseModalOpen(false)}
-      />
     </div>
   );
 }

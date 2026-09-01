@@ -1,5 +1,19 @@
 {
   "entities": {
+    "admins": {
+      "title": "AdminUser",
+      "description": "Authorized administrators who can inspect, manage, and monitor backend database tables",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "super_admin"] },
+        "displayName": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
     "players": {
       "title": "Player",
       "description": "User player information including name, house, avatar, stats, inventory, and party association",
@@ -127,6 +141,44 @@
         "description": { "type": "string" }
       },
       "required": ["id", "name", "costSp"]
+    }
+  },
+  "firestore": {
+    "/admins/{adminUid}": {
+      "schema": { "$ref": "#/entities/admins" },
+      "description": "Stores authorized administrator accounts. Regular users cannot read or write this."
+    },
+    "/players/{playerId}": {
+      "schema": { "$ref": "#/entities/players" },
+      "description": "Stores user player states and attributes."
+    },
+    "/gamerooms/{roomCode}": {
+      "schema": { "$ref": "#/entities/gamerooms" },
+      "description": "Stores active game room codes, stages, and host associations."
+    },
+    "/parties/{partyId}": {
+      "schema": { "$ref": "#/entities/parties" },
+      "description": "Stores Hogwarts parties and squad rosters."
+    },
+    "/houses/{houseId}": {
+      "schema": { "$ref": "#/entities/houses" },
+      "description": "Stores Hogwarts houses details."
+    },
+    "/sorting_hat_questions/{questionDocId}": {
+      "schema": { "$ref": "#/entities/sorting_hat_questions" },
+      "description": "Stores questions for the sorting hat ceremony."
+    },
+    "/sorting_hat_options/{optionDocId}": {
+      "schema": { "$ref": "#/entities/sorting_hat_options" },
+      "description": "Stores answer choices aligned with Hogwarts houses."
+    },
+    "/user_spells_and_abilities/{abilityDocId}": {
+      "schema": { "$ref": "#/entities/user_spells_and_abilities" },
+      "description": "Stores player acquired magical spells and masteries."
+    },
+    "/store/{storeItemId}": {
+      "schema": { "$ref": "#/entities/store" },
+      "description": "Stores magical store catalog."
     }
   }
 }

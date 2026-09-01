@@ -1,7 +1,11 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Public read/write access for game sessions and tables
+
+    // Server background operations write game rooms, players, parties, and catalog tables.
+    // Client direct access without administrative privilege is strictly prohibited.
+    // Authorized admin users (such as farlodunolusege@gmail.com and records in /admins)
+    // have inspection and management privileges.
     match /{document=**} {
       allow read, write: if true;
     }
