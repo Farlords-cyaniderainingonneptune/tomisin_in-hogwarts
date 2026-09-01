@@ -1,0 +1,132 @@
+{
+  "entities": {
+    "players": {
+      "title": "Player",
+      "description": "User player information including name, house, avatar, stats, inventory, and party association",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "house": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "hp": { "type": "number" },
+        "maxHp": { "type": "number" },
+        "mp": { "type": "number" },
+        "maxMp": { "type": "number" },
+        "sp": { "type": "number" },
+        "gold": { "type": "number" },
+        "partyName": { "type": "string" },
+        "partyLink": { "type": "string" },
+        "roomCode": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "gamerooms": {
+      "title": "GameRoom",
+      "description": "Active and archived game rooms and party sessions",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "partyName": { "type": "string" },
+        "partyLink": { "type": "string" },
+        "hostId": { "type": "string" },
+        "status": { "type": "string" },
+        "playerCount": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["code", "hostId"]
+    },
+    "parties": {
+      "title": "Party",
+      "description": "Hogwarts squads with party name, join link, and members",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "roomCode": { "type": "string" },
+        "partyLink": { "type": "string" },
+        "hostPlayerName": { "type": "string" },
+        "memberCount": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "name", "roomCode", "partyLink"]
+    },
+    "houses": {
+      "title": "House",
+      "description": "Hogwarts Houses with traits, base stats, and special abilities",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "crest": { "type": "string" },
+        "tagline": { "type": "string" },
+        "baseHp": { "type": "number" },
+        "baseMp": { "type": "number" },
+        "baseSp": { "type": "number" },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "sorting_hat_questions": {
+      "title": "SortingHatQuestion",
+      "description": "The enchanted questions presented during the Hogwarts Sorting Ceremony",
+      "type": "object",
+      "properties": {
+        "questionId": { "type": "number" },
+        "question": { "type": "string" },
+        "context": { "type": "string" },
+        "theme": { "type": "string" }
+      },
+      "required": ["questionId", "question"]
+    },
+    "sorting_hat_options": {
+      "title": "SortingHatOption",
+      "description": "House-aligned answers/options for the sorting hat questions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "questionId": { "type": "number" },
+        "house": { "type": "string" },
+        "text": { "type": "string" },
+        "flavor": { "type": "string" }
+      },
+      "required": ["id", "questionId", "house", "text"]
+    },
+    "user_spells_and_abilities": {
+      "title": "UserSpellsAndAbilities",
+      "description": "Player acquired spells, house abilities, and masteries",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "playerId": { "type": "string" },
+        "playerName": { "type": "string" },
+        "spellId": { "type": "string" },
+        "spellName": { "type": "string" },
+        "tier": { "type": "number" },
+        "mpCost": { "type": "number" },
+        "element": { "type": "string" },
+        "acquiredAt": { "type": "string" }
+      },
+      "required": ["id", "playerId", "spellId"]
+    },
+    "store": {
+      "title": "StoreItem",
+      "description": "Catalog of purchasable magical spells, birthday relics, and enchanted wands",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "costSp": { "type": "number" },
+        "mpCost": { "type": "number" },
+        "tier": { "type": "number" },
+        "element": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "name", "costSp"]
+    }
+  }
+}

@@ -283,10 +283,17 @@ export const CommonRoomView: React.FC<CommonRoomViewProps> = ({
 
             {/* Party Members Roster */}
             <div>
-              <h3 className="text-base font-bold font-serif text-amber-200 mb-3 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-pink-400" />
-                <span>Active Party Members ({playersList.length}/5)</span>
-              </h3>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-base font-bold font-serif text-amber-200 flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-pink-400" />
+                  <span>{room.partyName || "Tomisin's Birthday Squad"} ({playersList.length}/5)</span>
+                </h3>
+                {room.partyLink && (
+                  <span className="text-[11px] font-mono text-pink-300 bg-pink-950/60 px-2.5 py-0.5 rounded-full border border-pink-500/30">
+                    Party Link: <strong className="text-amber-300">{room.partyLink}</strong>
+                  </span>
+                )}
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3" id="common-room-party-grid">
                 {playersList.map((p) => {

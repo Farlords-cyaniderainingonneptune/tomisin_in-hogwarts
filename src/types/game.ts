@@ -111,6 +111,9 @@ export interface Player {
   statusEffects: StatusEffect[];
   currentAction?: string;
   isDefending?: boolean;
+  partyName?: string;
+  partyLink?: string;
+  sortingQuestions?: SortingHatQuestion[];
 }
 
 export interface EnemyAbility {
@@ -219,4 +222,7 @@ export interface GameRoom {
   combatState: CombatState | null;
   messages: ChatMessage[];
   createdAt: number;
+  partyName?: string;
+  partyLink?: string;
+  sortingQuestions?: SortingHatQuestion[];
 }

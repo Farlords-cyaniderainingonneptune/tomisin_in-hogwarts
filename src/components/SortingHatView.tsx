@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Sparkles, Wand2, Shield, Heart, Zap, Award, ArrowRight, CheckCircle2 } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Sparkles, Wand2, Shield, Heart, Zap, Award, ArrowRight, CheckCircle2, Shuffle } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { SORTING_HAT_QUESTIONS, HOUSES } from '../data/gameData';
-import { HouseId, Player } from '../types/game';
+import { HOUSES } from '../data/gameData';
+import { getRandomSortingQuestions } from '../data/sortingHatQuestions';
+import { HouseId, Player, SortingHatQuestion } from '../types/game';
 import { MagicalRuneCircle } from './MagicalRuneCircle';
 import { playButtonClick, playSpellCast, playVictoryFanfare } from '../utils/audio';
 
@@ -17,6 +18,14 @@ export const SortingHatView: React.FC<SortingHatViewProps> = ({
   onSubmitSorting,
   onEnterCommonRoom,
 }) => {
+  // Use the 5 randomly selected questions with randomized answer options, or generate fresh set
+  const questions: SortingHatQuestion[] = useMemo(() => {
+    if (player.sortingQuestions && player.sortingQuestions.length >= 5) {
+      return player.sortingQuestions;
+    }
+    return getRandomSortingQuestions(5);
+  }, [player.sortingQuestions]);
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [houseScores, setHouseScores] = useState<Record<HouseId, number>>({
     gryffindor: 0,
@@ -28,9 +37,9 @@ export const SortingHatView: React.FC<SortingHatViewProps> = ({
   const [isDeliberating, setIsDeliberating] = useState(false);
   const [assignedHouse, setAssignedHouse] = useState<HouseId | null>(player.house);
 
-  const question = SORTING_HAT_QUESTIONS[currentQuestionIndex];
+  const question = questions[currentQuestionIndex] || questions[0];
 
-  const handleSelectAnswer = (index: number, house: HouseId) => {
+  const handleSelectAnswer = (index: number, _house: HouseId) => {
     playButtonClick();
     setSelectedAnswerIndex(index);
   };
@@ -47,7 +56,7 @@ export const SortingHatView: React.FC<SortingHatViewProps> = ({
     setHouseScores(newScores);
     setSelectedAnswerIndex(null);
 
-    if (currentQuestionIndex < SORTING_HAT_QUESTIONS.length - 1) {
+    if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prev) => prev + 1);
     } else {
       // Finished all questions! Deliberate & assign
@@ -212,15 +221,20 @@ export const SortingHatView: React.FC<SortingHatViewProps> = ({
       {/* Progress Bar */}
       <div className="mb-6">
         <div className="flex items-center justify-between text-xs text-pink-200 font-semibold mb-2">
-          <span>Question {currentQuestionIndex + 1} of {SORTING_HAT_QUESTIONS.length}</span>
+          <div className="flex items-center gap-2">
+            <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
+            <span className="inline-flex items-center gap-1 text-[10px] text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-500/40">
+              <Shuffle className="w-3 h-3" /> Options Randomized
+            </span>
+          </div>
           <span className="text-amber-300 font-mono">
-            {Math.round(((currentQuestionIndex + 1) / SORTING_HAT_QUESTIONS.length) * 100)}% Sorted
+            {Math.round(((currentQuestionIndex + 1) / questions.length) * 100)}% Sorted
           </span>
         </div>
         <div className="w-full h-2 rounded-full bg-slate-900 border border-pink-500/30 overflow-hidden">
           <div
             className="h-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-400 transition-all duration-500"
-            style={{ width: `${((currentQuestionIndex + 1) / SORTING_HAT_QUESTIONS.length) * 100}%` }}
+            style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
           />
         </div>
       </div>

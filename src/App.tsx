@@ -7,6 +7,7 @@ import { SortingHatView } from './components/SortingHatView';
 import { CommonRoomView } from './components/CommonRoomView';
 import { CombatArenaView } from './components/CombatArenaView';
 import { VictoryView } from './components/VictoryView';
+import { DatabaseModal } from './components/DatabaseModal';
 import { Sparkles, AlertCircle } from 'lucide-react';
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
   const [room, setRoom] = useState<GameRoom | null>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isDatabaseModalOpen, setIsDatabaseModalOpen] = useState(false);
 
   useEffect(() => {
     // Initialize Socket connection to server
@@ -106,7 +108,11 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-pink-500 selection:text-white relative flex flex-col">
       {/* Global Magical Header */}
-      <HeaderBar room={room} currentPlayer={currentPlayer} />
+      <HeaderBar
+        room={room}
+        currentPlayer={currentPlayer}
+        onOpenDatabase={() => setIsDatabaseModalOpen(true)}
+      />
 
       {/* Floating Error Toast */}
       {errorMessage && (
@@ -166,6 +172,12 @@ export default function App() {
           </div>
         )}
       </main>
+
+      {/* Database Inspector Modal */}
+      <DatabaseModal
+        isOpen={isDatabaseModalOpen}
+        onClose={() => setIsDatabaseModalOpen(false)}
+      />
     </div>
   );
 }
