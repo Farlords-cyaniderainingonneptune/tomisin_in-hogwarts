@@ -1624,8 +1624,9 @@ async function start() {
     });
     app.use(vite.middlewares);
   } else {
-    // Esbuild places output into dist/server.cjs, so __dirname is path-safe
-    const distPath = path.resolve(__dirname, '..', 'dist');
+    // Esbuild places output into dist/server.js, so __dirname is path-safe
+    // const distPath = path.resolve(__dirname, '..', 'dist');
+    const distPath = __dirname
     app.use(express.static(distPath));
     app.get('*', (_req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
